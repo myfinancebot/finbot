@@ -208,3 +208,52 @@
   }
 </script>
 <!-- Net Worth Calculator Section End -->
+<!-- Loan Eligibility Calculator Section Start -->
+<section style="text-align: center; padding: 40px; background-color: #ede7f6; margin-top: 30px;">
+  <h2>Loan Eligibility Calculator</h2>
+  
+  <div style="max-width: 400px; margin: auto; text-align: left;">
+    <label>Monthly Income (₹):</label><br>
+    <input type="number" id="monthlyIncome" placeholder="Your monthly income" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+    
+    <label>Existing EMI (₹):</label><br>
+    <input type="number" id="existingEMI" placeholder="Existing monthly EMIs (if any)" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+    
+    <label>Interest Rate (% per annum):</label><br>
+    <input type="number" id="loanInterestRate" placeholder="e.g. 10" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+    
+    <label>Tenure (Years):</label><br>
+    <input type="number" id="loanTenure" placeholder="e.g. 5 years" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <button onclick="calculateLoanEligibility()" style="padding: 10px 20px; width: 100%;">Check Eligibility</button>
+    
+    <p id="loanEligibilityResult" style="font-size: 18px; margin-top: 15px;"></p>
+  </div>
+</section>
+
+<script>
+  function calculateLoanEligibility() {
+    const income = parseFloat(document.getElementById("monthlyIncome").value) || 0;
+    const existingEMI = parseFloat(document.getElementById("existingEMI").value) || 0;
+    const interestRate = parseFloat(document.getElementById("loanInterestRate").value) || 0;
+    const tenureYears = parseFloat(document.getElementById("loanTenure").value) || 0;
+
+    if (income === 0 || interestRate === 0 || tenureYears === 0) {
+      document.getElementById("loanEligibilityResult").innerText = "Please fill in all required fields.";
+      return;
+    }
+
+    const maxAffordableEMI = income * 0.5 - existingEMI;
+
+    if (maxAffordableEMI <= 0) {
+      document.getElementById("loanEligibilityResult").innerText = "Based on your existing EMIs, you're not eligible for a new loan.";
+      return;
+    }
+
+    const monthlyInterestRate = interestRate / 12 / 100;
+    const totalMonths = tenureYears * 12;
+
+    // Formula: Loan = EMI × [(1 + r)^n – 1] / [r × (1 + r)^n]
+    const eligibleLoan = maxAffordableEMI * ((Math.pow(1 + monthlyInterestRate, totalMonths) - 1) / (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, totalMonths)));
+
+    document.getElementById("loanEligibilityResult").innerText = `Estimated Eligible Loan
