@@ -179,3 +179,32 @@
   }
 </script>
 <!-- Budget Planner Section End -->
+<!-- Net Worth Calculator Section Start -->
+<section style="text-align: center; padding: 40px; background-color: #f0f4c3; margin-top: 30px;">
+  <h2>Net Worth Calculator</h2>
+  
+  <div style="max-width: 400px; margin: auto; text-align: left;">
+    <label>Total Assets (₹):</label><br>
+    <input type="number" id="assets" placeholder="Enter total assets value" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+    
+    <label>Total Liabilities (₹):</label><br>
+    <input type="number" id="liabilities" placeholder="Enter total liabilities value" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+    
+    <button onclick="calculateNetWorth()" style="padding: 10px 20px; width: 100%;">Calculate Net Worth</button>
+    
+    <p id="netWorthResult" style="font-size: 18px; margin-top: 15px;"></p>
+  </div>
+</section>
+
+<script>
+  function calculateNetWorth() {
+    const assets = parseFloat(document.getElementById('assets').value) || 0;
+    const liabilities = parseFloat(document.getElementById('liabilities').value) || 0;
+    
+    const netWorth = assets - liabilities;
+    
+    document.getElementById('netWorthResult').innerText = 
+      `Your Net Worth is: ₹${netWorth.toFixed(2)}`;
+  }
+</script>
+<!-- Net Worth Calculator Section End -->
