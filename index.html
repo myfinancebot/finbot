@@ -129,3 +129,53 @@
   }
 </script>
 <!-- Savings Calculator Section End -->
+<!-- Budget Planner Section Start -->
+<section style="text-align: center; padding: 40px; background-color: #fff3e0; margin-top: 30px;">
+  <h2>Budget Planner</h2>
+  
+  <div style="max-width: 400px; margin: auto; text-align: left;">
+    <label>Income (₹):</label><br>
+    <input type="number" id="income" placeholder="Enter your monthly income" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+    
+    <label>Rent (₹):</label><br>
+    <input type="number" id="rent" placeholder="Monthly Rent" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+    
+    <label>Groceries (₹):</label><br>
+    <input type="number" id="groceries" placeholder="Monthly Groceries" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+    
+    <label>Entertainment (₹):</label><br>
+    <input type="number" id="entertainment" placeholder="Monthly Entertainment" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+    
+    <label>Other Expenses (₹):</label><br>
+    <input type="number" id="others" placeholder="Other Monthly Expenses" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+    
+    <button onclick="calculateBudget()" style="padding: 10px 20px; width: 100%;">Calculate Budget</button>
+    
+    <p id="budgetResult" style="font-size: 18px; margin-top: 15px;"></p>
+  </div>
+</section>
+
+<script>
+  function calculateBudget() {
+    const income = parseFloat(document.getElementById('income').value) || 0;
+    const rent = parseFloat(document.getElementById('rent').value) || 0;
+    const groceries = parseFloat(document.getElementById('groceries').value) || 0;
+    const entertainment = parseFloat(document.getElementById('entertainment').value) || 0;
+    const others = parseFloat(document.getElementById('others').value) || 0;
+
+    const totalExpenses = rent + groceries + entertainment + others;
+    const balance = income - totalExpenses;
+
+    if (income === 0) {
+      document.getElementById('budgetResult').innerText = "Please enter your income.";
+      return;
+    }
+
+    if (balance < 0) {
+      document.getElementById('budgetResult').innerText = "Warning: Your expenses exceed your income!";
+    } else {
+      document.getElementById('budgetResult').innerText = `Total Expenses: ₹${totalExpenses.toFixed(2)}\nRemaining Balance: ₹${balance.toFixed(2)}`;
+    }
+  }
+</script>
+<!-- Budget Planner Section End -->
