@@ -96,3 +96,36 @@
   }
 </script>
 <!-- Savings Calculator Section End -->
+<!-- Savings Calculator Section Start -->
+<section style="text-align: center; padding: 40px; background-color: #e0f7fa; margin-top: 30px;">
+  <h2>Savings Calculator</h2>
+  <input type="number" id="monthlySavings" placeholder="Monthly Savings Amount (₹)" style="margin: 5px; padding: 8px;">
+  <input type="number" id="interestRate" placeholder="Annual Interest Rate (%)" style="margin: 5px; padding: 8px;">
+  <input type="number" id="years" placeholder="Number of Years" style="margin: 5px; padding: 8px;">
+  <br><br>
+  <button onclick="calculateSavings()" style="padding: 10px 20px;">Calculate</button>
+  <p id="savingsResult" style="font-size: 18px; margin-top: 15px;"></p>
+</section>
+
+<script>
+  function calculateSavings() {
+    const monthlySavings = parseFloat(document.getElementById("monthlySavings").value);
+    const annualInterest = parseFloat(document.getElementById("interestRate").value) / 100;
+    const years = parseFloat(document.getElementById("years").value);
+
+    if (isNaN(monthlySavings) || isNaN(annualInterest) || isNaN(years)) {
+      document.getElementById("savingsResult").innerText = "Please enter valid numbers.";
+      return;
+    }
+
+    const months = years * 12;
+    const monthlyInterest = annualInterest / 12;
+
+    // Future value formula for monthly savings with interest
+    const futureValue = monthlySavings * ((Math.pow(1 + monthlyInterest, months) - 1) / monthlyInterest);
+
+    document.getElementById("savingsResult").innerText = 
+      "Estimated Savings after " + years + " years: ₹" + futureValue.toFixed(2);
+  }
+</script>
+<!-- Savings Calculator Section End -->
