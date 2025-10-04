@@ -435,3 +435,51 @@
   }
 </script>
 <!-- Retirement Calculator End -->
+<!-- SIP Calculator Start -->
+<section style="text-align: center; padding: 40px; background-color: #e8f5e9; margin-top: 30px;">
+  <h2>SIP Calculator</h2>
+
+  <div style="max-width: 400px; margin: auto; text-align: left;">
+    <label>Monthly Investment (₹):</label><br>
+    <input type="number" id="sipAmount" placeholder="e.g. 5000" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <label>Investment Period (Years):</label><br>
+    <input type="number" id="sipYears" placeholder="e.g. 10" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <label>Expected Annual Return (%):</label><br>
+    <input type="number" id="sipRate" placeholder="e.g. 12" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <button onclick="calculateSIP()" style="padding: 10px 20px; width: 100%;">Calculate</button>
+
+    <p id="sipResult" style="font-size: 18px; margin-top: 15px;"></p>
+  </div>
+</section>
+
+<script>
+  function calculateSIP() {
+    const monthlyInvestment = parseFloat(document.getElementById("sipAmount").value) || 0;
+    const years = parseFloat(document.getElementById("sipYears").value) || 0;
+    const annualRate = parseFloat(document.getElementById("sipRate").value) || 0;
+
+    if (monthlyInvestment <= 0 || years <= 0 || annualRate <= 0) {
+      document.getElementById("sipResult").innerText = "⚠️ Please enter all values correctly.";
+      return;
+    }
+
+    const months = years * 12;
+    const monthlyRate = annualRate / 12 / 100;
+    const futureValue = monthlyInvestment * ((Math.pow(1 + monthlyRate, months) - 1) * (1 + monthlyRate));
+
+    const totalInvested = monthlyInvestment * months;
+    const returns = futureValue - totalInvested;
+
+    document.getElementById("sipResult").innerHTML = `
+      💰 <strong>Total Invested:</strong> ₹${totalInvested.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br>
+      📈 <strong>Estimated Returns:</strong> ₹${returns.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br>
+      💼 <strong>Total Value:</strong> ₹${futureValue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+    `;
+  }
+</script>
+<!-- SIP Calculator End -->
+
+    
