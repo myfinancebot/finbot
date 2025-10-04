@@ -565,5 +565,56 @@
   }
 </script>
 <!-- RD Calculator End -->
+<!-- Income Tax Calculator Start -->
+<section style="text-align: center; padding: 40px; background-color: #fce4ec; margin-top: 30px;">
+  <h2>Income Tax Calculator (FY 2025-26)</h2>
+
+  <div style="max-width: 400px; margin: auto; text-align: left;">
+    <label>Total Annual Income (₹):</label><br>
+    <input type="number" id="taxIncome" placeholder="e.g. 900000" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <label>Total Deductions (₹):</label><br>
+    <input type="number" id="taxDeductions" placeholder="e.g. 150000" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <button onclick="calculateTax()" style="padding: 10px 20px; width: 100%;">Calculate</button>
+
+    <p id="taxResult" style="font-size: 18px; margin-top: 15px;"></p>
+  </div>
+</section>
+
+<script>
+  function calculateTax() {
+    let income = parseFloat(document.getElementById("taxIncome").value) || 0;
+    const deductions = parseFloat(document.getElementById("taxDeductions").value) || 0;
+    const taxableIncome = income - deductions;
+
+    if (income <= 0) {
+      document.getElementById("taxResult").innerText = "⚠️ Please enter a valid income.";
+      return;
+    }
+
+    let tax = 0;
+
+    if (taxableIncome <= 250000) {
+      tax = 0;
+    } else if (taxableIncome <= 500000) {
+      tax = (taxableIncome - 250000) * 0.05;
+    } else if (taxableIncome <= 1000000) {
+      tax = (250000 * 0.05) + (taxableIncome - 500000) * 0.2;
+    } else {
+      tax = (250000 * 0.05) + (500000 * 0.2) + (taxableIncome - 1000000) * 0.3;
+    }
+
+    // Add 4% cess
+    const cess = tax * 0.04;
+    const totalTax = tax + cess;
+
+    document.getElementById("taxResult").innerHTML = `
+      🧾 <strong>Taxable Income:</strong> ₹${taxableIncome.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br>
+      💸 <strong>Total Tax (with 4% cess):</strong> ₹${totalTax.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+    `;
+  }
+</script>
+<!-- Income Tax Calculator End -->
 
     
