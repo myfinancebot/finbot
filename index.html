@@ -329,3 +329,59 @@
     <label>Expected Annual Return (%):</label><br>
     <input type="
 <p><a href="https://groww.in/partner/yourlink" target="_blank">Start Investing with Groww →</a></p>
+<!-- Credit Card Payoff Calculator Start -->
+<section style="text-align: center; padding: 40px; background-color: #fff8e1; margin-top: 30px;">
+  <h2>Credit Card Payoff Calculator</h2>
+
+  <div style="max-width: 400px; margin: auto; text-align: left;">
+    <label>Outstanding Balance (₹):</label><br>
+    <input type="number" id="ccBalance" placeholder="e.g. 50000" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <label>Monthly Payment (₹):</label><br>
+    <input type="number" id="ccMonthlyPayment" placeholder="e.g. 5000" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <label>Interest Rate (Annual %):</label><br>
+    <input type="number" id="ccInterest" placeholder="e.g. 24" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <button onclick="calculatePayoff()" style="padding: 10px 20px; width: 100%;">Calculate</button>
+
+    <p id="ccResult" style="font-size: 18px; margin-top: 15px;"></p>
+  </div>
+</section>
+
+<script>
+  function calculatePayoff() {
+    let balance = parseFloat(document.getElementById("ccBalance").value) || 0;
+    const monthlyPayment = parseFloat(document.getElementById("ccMonthlyPayment").value) || 0;
+    const annualRate = parseFloat(document.getElementById("ccInterest").value) || 0;
+
+    if (balance <= 0 || monthlyPayment <= 0 || annualRate <= 0) {
+      document.getElementById("ccResult").innerText = "⚠️ Please enter all fields correctly.";
+      return;
+    }
+
+    const monthlyRate = annualRate / 12 / 100;
+    let months = 0;
+    let totalInterest = 0;
+
+    while (balance > 0 && months < 600) {
+      const interest = balance * monthlyRate;
+      balance += interest;
+      balance -= monthlyPayment;
+      totalInterest += interest;
+      months++;
+      if (balance < 0) balance = 0;
+    }
+
+    if (months >= 600) {
+      document.getElementById("ccResult").innerText = "❌ Monthly payment too low to repay the balance.";
+      return;
+    }
+
+    document.getElementById("ccResult").innerHTML = `
+      ⏳ <strong>Months to Payoff:</strong> ${months} months<br>
+      💸 <strong>Total Interest Paid:</strong> ₹${totalInterest.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+    `;
+  }
+</script>
+<!-- Credit Card Payoff Calculator End -->
