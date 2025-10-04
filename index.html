@@ -385,3 +385,53 @@
   }
 </script>
 <!-- Credit Card Payoff Calculator End -->
+<!-- Retirement Calculator Start -->
+<section style="text-align: center; padding: 40px; background-color: #e3f2fd; margin-top: 30px;">
+  <h2>Retirement Calculator</h2>
+
+  <div style="max-width: 400px; margin: auto; text-align: left;">
+    <label>Current Age:</label><br>
+    <input type="number" id="currentAge" placeholder="e.g. 30" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <label>Retirement Age:</label><br>
+    <input type="number" id="retireAge" placeholder="e.g. 60" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <label>Monthly Expenses after Retirement (₹):</label><br>
+    <input type="number" id="monthlyExpense" placeholder="e.g. 30000" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <label>Expected Lifespan (Age):</label><br>
+    <input type="number" id="lifeExpectancy" placeholder="e.g. 85" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <label>Expected Annual Return (%):</label><br>
+    <input type="number" id="annualReturn" placeholder="e.g. 8" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <button onclick="calculateRetirement()" style="padding: 10px 20px; width: 100%;">Calculate</button>
+
+    <p id="retirementResult" style="font-size: 18px; margin-top: 15px;"></p>
+  </div>
+</section>
+
+<script>
+  function calculateRetirement() {
+    const currentAge = parseInt(document.getElementById("currentAge").value) || 0;
+    const retireAge = parseInt(document.getElementById("retireAge").value) || 0;
+    const monthlyExpense = parseFloat(document.getElementById("monthlyExpense").value) || 0;
+    const lifeExpectancy = parseInt(document.getElementById("lifeExpectancy").value) || 0;
+    const annualReturn = parseFloat(document.getElementById("annualReturn").value) || 0;
+
+    if (retireAge <= currentAge || monthlyExpense <= 0 || lifeExpectancy <= retireAge || annualReturn <= 0) {
+      document.getElementById("retirementResult").innerText = "⚠️ Please enter all values correctly.";
+      return;
+    }
+
+    const retirementYears = lifeExpectancy - retireAge;
+    const yearlyExpense = monthlyExpense * 12;
+    const totalCorpus = yearlyExpense * ((1 - Math.pow(1 + annualReturn / 100, -retirementYears)) / (annualReturn / 100));
+
+    document.getElementById("retirementResult").innerHTML = `
+      🧓 <strong>You need a corpus of:</strong> ₹${totalCorpus.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br>
+      💡 <small>(To maintain ₹${monthlyExpense.toFixed(0)} per month for ${retirementYears} years after age ${retireAge})</small>
+    `;
+  }
+</script>
+<!-- Retirement Calculator End -->
