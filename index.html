@@ -481,5 +481,89 @@
   }
 </script>
 <!-- SIP Calculator End -->
+<!-- FD Calculator Start -->
+<section style="text-align: center; padding: 40px; background-color: #fff3e0; margin-top: 30px;">
+  <h2>Fixed Deposit (FD) Calculator</h2>
+
+  <div style="max-width: 400px; margin: auto; text-align: left;">
+    <label>Principal Amount (₹):</label><br>
+    <input type="number" id="fdPrincipal" placeholder="e.g. 100000" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <label>Interest Rate (Annual %):</label><br>
+    <input type="number" id="fdRate" placeholder="e.g. 6.5" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <label>Tenure (in Years):</label><br>
+    <input type="number" id="fdYears" placeholder="e.g. 5" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <button onclick="calculateFD()" style="padding: 10px 20px; width: 100%;">Calculate</button>
+
+    <p id="fdResult" style="font-size: 18px; margin-top: 15px;"></p>
+  </div>
+</section>
+
+<script>
+  function calculateFD() {
+    const principal = parseFloat(document.getElementById("fdPrincipal").value) || 0;
+    const rate = parseFloat(document.getElementById("fdRate").value) || 0;
+    const years = parseFloat(document.getElementById("fdYears").value) || 0;
+
+    if (principal <= 0 || rate <= 0 || years <= 0) {
+      document.getElementById("fdResult").innerText = "⚠️ Please fill all fields correctly.";
+      return;
+    }
+
+    const amount = principal * Math.pow((1 + rate / 100), years);
+    const interest = amount - principal;
+
+    document.getElementById("fdResult").innerHTML = `
+      💰 <strong>Total Maturity Amount:</strong> ₹${amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br>
+      💸 <strong>Total Interest Earned:</strong> ₹${interest.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+    `;
+  }
+</script>
+<!-- FD Calculator End -->
+<!-- RD Calculator Start -->
+<section style="text-align: center; padding: 40px; background-color: #ede7f6; margin-top: 30px;">
+  <h2>Recurring Deposit (RD) Calculator</h2>
+
+  <div style="max-width: 400px; margin: auto; text-align: left;">
+    <label>Monthly Deposit (₹):</label><br>
+    <input type="number" id="rdMonthly" placeholder="e.g. 5000" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <label>Interest Rate (Annual %):</label><br>
+    <input type="number" id="rdRate" placeholder="e.g. 6.5" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <label>Tenure (in Months):</label><br>
+    <input type="number" id="rdMonths" placeholder="e.g. 60" style="width: 100%; padding: 8px; margin-bottom: 10px;"><br>
+
+    <button onclick="calculateRD()" style="padding: 10px 20px; width: 100%;">Calculate</button>
+
+    <p id="rdResult" style="font-size: 18px; margin-top: 15px;"></p>
+  </div>
+</section>
+
+<script>
+  function calculateRD() {
+    const monthly = parseFloat(document.getElementById("rdMonthly").value) || 0;
+    const rate = parseFloat(document.getElementById("rdRate").value) || 0;
+    const months = parseInt(document.getElementById("rdMonths").value) || 0;
+
+    if (monthly <= 0 || rate <= 0 || months <= 0) {
+      document.getElementById("rdResult").innerText = "⚠️ Please enter all values correctly.";
+      return;
+    }
+
+    const r = rate / 400; // Annual rate divided by 4*12
+    const maturity = monthly * months + monthly * months * (months + 1) / 2 * r / 100;
+    const invested = monthly * months;
+    const interest = maturity - invested;
+
+    document.getElementById("rdResult").innerHTML = `
+      💰 <strong>Total Maturity Amount:</strong> ₹${maturity.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br>
+      💸 <strong>Total Interest Earned:</strong> ₹${interest.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+    `;
+  }
+</script>
+<!-- RD Calculator End -->
 
     
